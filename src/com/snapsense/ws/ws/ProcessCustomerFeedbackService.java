@@ -54,8 +54,7 @@ public class ProcessCustomerFeedbackService implements AppConstants{
             add("elsewhere");
         }};
 		
-		SearchManager searchManager = new SearchManager();
-		searchManager.findKeyWords(json, keyWords);
+		SearchManager.findKeyWords(json, keyWords);
 		
 		return Response.status(200).entity("Response JSON").build();
 	}
