@@ -1,8 +1,8 @@
 package com.snapsense.ws.ws;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-import javax.websocket.server.PathParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,11 +14,12 @@ import javax.ws.rs.core.Response;
 import com.snapsense.ws.bl.SearchManager;
 import com.snapsense.ws.util.AppConstants;
 
-@Path("/ProcessCustomerFeedback")
+@Path("/processfeedback")
 public class ProcessCustomerFeedbackService implements AppConstants{
 	
 	@GET
-	@Produces("text/plain")
+	@Path("getspeech")
+	@Produces("application/json")
 	public Response helloWorld()
 	{
 		String output = "GET METHOD IS WORKING";
@@ -28,35 +29,16 @@ public class ProcessCustomerFeedbackService implements AppConstants{
 	}
 	
 	@POST
+	@Path("savespeech")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces("text/plain")
-	public Response processCustomerFeedback(String json)
+	@Produces("application/json")
+	public String processCustomerFeedback(String json)
 	{
-		System.out.println("Received JSON: ");
-		System.out.println(json);
-		
-		ArrayList<String> keyWords = new ArrayList<String>() {{
-            add("doesn't");
-            add("work");
-            add("hate");
-            add("bad");
-            add("good");
-            add("not");
-            add("jacket");
-            add("rip");
-            add("size");
-            add("zipper");
-            add("return");
-            add("sick");
-            add("worst");
-            add("Customer");
-            add("service");
-            add("elsewhere");
-        }};
+		List<String> keyWords = Arrays.asList(json.split(" "));
 		
 		SearchManager.findKeyWords(json, keyWords);
 		
-		return Response.status(200).entity("Response JSON").build();
+		return "{ \"response\" : \"Successfully saved the following text : " +json + "\" }";
 	}
 	
 }

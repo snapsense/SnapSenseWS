@@ -50,7 +50,7 @@ public class SearchManager {
     }
 	
 	/** function findPattern **/
-    public static void findKeyWords(String t, ArrayList<String> keyWords)
+    public static void findKeyWords(String t, List<String> keyWords)
     {
     	long startTime = System.currentTimeMillis();
     	
